@@ -189,7 +189,6 @@ require('lazy').setup({
     },
   },
 
-<<<<<<< Updated upstream
   {
     -- Theme inspired by Atom
     'navarasu/onedark.nvim',
@@ -203,16 +202,6 @@ require('lazy').setup({
       require('onedark').load()
     end,
   },
-=======
-  -- {
-  --   -- Theme inspired by Atom
-  --   'navarasu/onedark.nvim',
-  --   priority = 1000,
-  --   config = function()
-  --     vim.cmd.colorscheme 'onedark'
-  --   end,
-  -- },
->>>>>>> Stashed changes
 
   {
     -- Set lualine as statusline
