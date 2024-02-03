@@ -24,6 +24,7 @@ vim.keymap.set('n', '<c-j>', '<c-w>j', { silent = true, noremap = true })
 -- general mappings
 vim.keymap.set('n', '<c-p>', require('telescope.builtin').find_files, { desc = 'Search Files' })
 vim.keymap.set('n', '<leader>f', ':Rg<cr>', { desc = 'Rg fuzzy find in project' })
+vim.keymap.set('n', '<leader>,', ':noh<cr>', { desc = 'Turn off search highlighting.' })
 
 -- quickfix
 vim.keymap.set('n', ']q', ':cn<cr>', { silent = true, desc = 'Next Quickfix' })
