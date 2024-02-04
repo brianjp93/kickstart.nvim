@@ -8,11 +8,11 @@ vim.keymap.set('i', 'jk', '<esc>', { silent = true })
 vim.keymap.set('t', 'jk', '<C-\\><C-n>', { silent= true, noremap = true })
 
 -- tabs
-vim.keymap.set('n', 'tn', ':tabnew<cr>', { silent = true })
-vim.keymap.set('n', 'tl', ':tabm +1<cr>', { silent = true })
-vim.keymap.set('n', 'th', ':tabm -1<cr>', { silent = true })
-vim.keymap.set('n', 'tn', ':tabnew<cr>', { silent = true })
-vim.keymap.set('n', 'tc', ':tabclose<cr>', { silent = true })
+vim.keymap.set('n', '<leader>tn', ':tabnew<cr>', { silent = true })
+vim.keymap.set('n', '<leader>tl', ':tabm +1<cr>', { silent = true })
+vim.keymap.set('n', '<leader>th', ':tabm -1<cr>', { silent = true })
+vim.keymap.set('n', '<leader>tn', ':tabnew<cr>', { silent = true })
+vim.keymap.set('n', '<leader>tc', ':tabclose<cr>', { silent = true })
 
 -- git
 vim.keymap.set('n', '<leader>gs', ':Git<cr>', { silent = true })
