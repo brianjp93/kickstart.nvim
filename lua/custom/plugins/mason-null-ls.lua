@@ -9,5 +9,13 @@ return {
     require("mason-null-ls").setup {
       ensure_installed = { "djlint" },
     }
+    require("null-ls").setup {
+      sources = {
+        require('null-ls').builtins.formatting.djlint.with({
+          extra_args = { "--reformat" },
+          filetypes = { "htmldjango" },
+        })
+      }
+    }
   end,
 }
