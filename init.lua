@@ -575,11 +575,19 @@ require('mason-lspconfig').setup()
 --  If you want to override the default filetypes that your language server will attach to you can
 --  define the property 'filetypes' to the map in question.
 local servers = {
-  -- clangd = {},
-  -- gopls = {},
-  -- pyright = {},
-  -- rust_analyzer = {},
-  -- tsserver = {},
+  gopls = {},
+  pyright = {},
+  rust_analyzer = {},
+  tsserver = {},
+  ruff_lsp = {},
+  eslint = {},
+  bashls = {},
+  html = {},
+  emmet_language_server = {},
+  tailwindcss = {},
+  vuels = {},
+  docker_compose_language_service = {},
+  dockerls = {},
   -- html = { filetypes = { 'html', 'twig', 'hbs'} },
 
   lua_ls = {

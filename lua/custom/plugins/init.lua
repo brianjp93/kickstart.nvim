@@ -13,7 +13,11 @@ vim.keymap.set('n', 'tl', ':tabm +1<cr>', { silent = true })
 vim.keymap.set('n', 'th', ':tabm -1<cr>', { silent = true })
 vim.keymap.set('n', 'tn', ':tabnew<cr>', { silent = true })
 vim.keymap.set('n', 'tc', ':tabclose<cr>', { silent = true })
+
+-- git
 vim.keymap.set('n', '<leader>gs', ':Git<cr>', { silent = true })
+vim.keymap.set('n', '<leader>gb', ':Git blame<cr>', { silent = true })
+vim.keymap.set('n', '<leader>gl', ':Git log<cr>', { silent = true })
 
 -- windows
 vim.keymap.set('n', '<c-l>', '<c-w>l', { silent = true, noremap = true })
