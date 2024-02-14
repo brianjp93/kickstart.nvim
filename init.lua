@@ -582,7 +582,9 @@ local servers = {
   ruff_lsp = {},
   eslint = {},
   bashls = {},
-  html = {},
+  html = {
+    filetypes = {'html', 'htmldjango'},
+  },
   emmet_language_server = {},
   tailwindcss = {},
   vuels = {},
