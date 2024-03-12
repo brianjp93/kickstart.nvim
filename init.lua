@@ -109,6 +109,7 @@ require('lazy').setup({
 
       -- Adds a number of user-friendly snippets
       'rafamadriz/friendly-snippets',
+      "kirasok/cmp-hledger", -- hledger integration'
     },
   },
 
@@ -679,6 +680,7 @@ cmp.setup {
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
     { name = 'path' },
+    { name = 'hledger' },
   },
 }
 
