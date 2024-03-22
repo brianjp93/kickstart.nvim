@@ -583,9 +583,6 @@ local servers = {
   ruff_lsp = {},
   eslint = {},
   bashls = {},
-  beancount = {
-    filetypes = {'bean'}
-  },
   html = {
     filetypes = {'html', 'htmldjango'},
   },
