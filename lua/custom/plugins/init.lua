@@ -36,6 +36,8 @@ vim.keymap.set('n', '[q', ':cp<cr>', { silent = true, desc = 'Prev Quickfix' })
 vim.keymap.set({'v', 'n'}, 'L', '$', { noremap = true })
 vim.keymap.set({'v', 'n'}, 'H', '^', { noremap = true })
 
+vim.keymap.set('n', '<leader>p', ':Format<cr>', { noremap = true})
+
 vim.o.splitbelow = true
 vim.o.splitright = true
 vim.o.scrolloff = 3
