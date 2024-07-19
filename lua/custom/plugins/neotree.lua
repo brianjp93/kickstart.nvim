@@ -3,8 +3,9 @@ vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
 vim.keymap.set("n", "<C-n>", ":Neotree toggle<CR>", { silent = true })
 vim.keymap.set("n", "<space>nn", ":Neotree reveal_file=%<CR>", { silent = true, desc = 'Reveal current file in Neotree.' })
 
-require('which-key').register {
-  ['<leader>n'] = { name = '[N]eotree', _ = 'which_key_ignore' },
+require('which-key').add {
+  { "<leader>n", group = "[N]eotree" },
+  { "<leader>n_", hidden = true },
 }
 
 return {
