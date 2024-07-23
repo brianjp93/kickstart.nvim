@@ -192,3 +192,7 @@ This requires:
 {'nvim-telescope/telescope-fzf-native.nvim', build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
 ```
 
+# Tailwind LSP
+- The tailwind LSP only works if...
+  - you `npm i tailwindcss` (or install globally)
+  - you have a tailwindcss config file in the root of your project
