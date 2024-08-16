@@ -1,6 +1,6 @@
 (string 
   (string_content) @injection.content
-    (#vim-match? @injection.content "^\w*SELECT|FROM|INNER JOIN|WHERE|CREATE|DROP|INSERT|UPDATE|ALTER|BEGIN.*$")
+    (#vim-match? @injection.content "^\w*SELECT|FROM|INNER JOIN|WHERE|CREATE|DROP|INSERT|UPDATE|ALTER|BEGIN|WITH|MERGE.*$")
     (#set! injection.language "sql"))
 
 (call
