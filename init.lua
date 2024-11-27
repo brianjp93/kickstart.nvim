@@ -604,6 +604,11 @@ local servers = {
   vuels = {},
   docker_compose_language_service = {},
   dockerls = {},
+  pyright = {
+    python = {
+      pythonPath = vim.fn.exepath("python"),
+    },
+  },
   -- html = { filetypes = { 'html', 'twig', 'hbs'} },
 
   lua_ls = {
@@ -640,6 +645,7 @@ mason_lspconfig.setup_handlers {
     }
   end,
 }
+
 
 -- [[ Configure nvim-cmp ]]
 -- See `:help cmp`
