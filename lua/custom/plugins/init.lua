@@ -38,9 +38,6 @@ vim.keymap.set({'v', 'n'}, 'H', '^', { noremap = true })
 
 vim.keymap.set('n', '<leader>p', ':Format<cr>', { noremap = true})
 
--- run python file with leader b
-vim.keymap.set('n', '<leader>b', ':!python %<CR>', { noremap = true, silent = false })
-
 vim.o.splitbelow = true
 vim.o.splitright = true
 vim.o.scrolloff = 3
