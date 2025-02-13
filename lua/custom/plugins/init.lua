@@ -41,6 +41,7 @@ vim.keymap.set('n', '<leader>p', ':Format<cr>', { noremap = true})
 vim.o.splitbelow = true
 vim.o.splitright = true
 vim.o.scrolloff = 3
+vim.opt.termguicolors = true
 
 return {
   {
