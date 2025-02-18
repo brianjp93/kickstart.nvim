@@ -412,7 +412,8 @@ local function telescope_live_grep_open_files()
 end
 local function custom_find_files()
   require('telescope.builtin').find_files {
-  find_command = { 'rg', '--files', '-uu', '--iglob', '!.git', '--iglob', '!**/node_modules/**'} }
+    find_command = { 'rg', '--files', '-uu', '--iglob', '!.git', '--iglob', '!**/node_modules/**' }
+  }
 end
 vim.keymap.set('n', '<leader>s/', telescope_live_grep_open_files, { desc = '[S]earch [/] in Open Files' })
 vim.keymap.set('n', '<leader>ss', require('telescope.builtin').builtin, { desc = '[S]earch [S]elect Telescope' })
@@ -601,12 +602,12 @@ require('mason-lspconfig').setup()
 local servers = {
   gopls = {},
   rust_analyzer = {},
-  tsserver = {},
+  ts_ls = {},
   ruff = {},
   eslint = {},
   bashls = {},
   html = {
-    filetypes = {'html', 'htmldjango'},
+    filetypes = { 'html', 'htmldjango' },
   },
   emmet_language_server = {},
   tailwindcss = {},
