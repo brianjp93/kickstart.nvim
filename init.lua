@@ -601,7 +601,7 @@ require('mason-lspconfig').setup()
 local servers = {
   gopls = {},
   rust_analyzer = {},
-  ts_ls = {},
+  tsserver = {},
   ruff = {},
   eslint = {},
   bashls = {},
