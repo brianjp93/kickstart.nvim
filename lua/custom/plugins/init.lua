@@ -38,6 +38,17 @@ vim.keymap.set({'v', 'n'}, 'H', '^', { noremap = true })
 
 vim.keymap.set('n', '<leader>p', ':Format<cr>', { noremap = true})
 
+vim.api.nvim_create_augroup("JSSettings", { clear = true })
+
+-- prettier
+vim.api.nvim_create_autocmd("BufRead", {
+  pattern = { "*.js", "*.ts", "*.tsx", "*.jsx" },
+  group = "JSSettings",
+  callback = function()
+    vim.keymap.set("n", "<leader>p", ":!prettier '%:p' --write<CR>", { silent = true })
+  end,
+})
+
 vim.o.splitbelow = true
 vim.o.splitright = true
 vim.o.scrolloff = 3
