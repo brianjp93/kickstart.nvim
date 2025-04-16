@@ -11,7 +11,6 @@ vim.keymap.set('t', 'jk', '<C-\\><C-n>', { silent= true, noremap = true })
 vim.keymap.set('n', '<leader>tn', ':tabnew<cr>', { silent = true })
 vim.keymap.set('n', '<leader>tl', ':tabm +1<cr>', { silent = true })
 vim.keymap.set('n', '<leader>th', ':tabm -1<cr>', { silent = true })
-vim.keymap.set('n', '<leader>tn', ':tabnew<cr>', { silent = true })
 vim.keymap.set('n', '<leader>tc', ':tabclose<cr>', { silent = true })
 
 -- git
@@ -36,16 +35,22 @@ vim.keymap.set('n', '[q', ':cp<cr>', { silent = true, desc = 'Prev Quickfix' })
 vim.keymap.set({'v', 'n'}, 'L', '$', { noremap = true })
 vim.keymap.set({'v', 'n'}, 'H', '^', { noremap = true })
 
-vim.keymap.set('n', '<leader>p', ':Format<cr>', { noremap = true})
+-- Global format binding that will be overridden by filetype-specific ones
+vim.keymap.set('n', '<leader>p', function()
+  vim.lsp.buf.format({ async = true })
+end, { noremap = true, desc = "Format current buffer" })
 
 vim.api.nvim_create_augroup("JSSettings", { clear = true })
 
--- prettier
+-- Use vim.lsp.buf.format for JS/TS files instead of direct shell command to prettier
+-- This will use null-ls's prettier formatter which respects .prettierrc
 vim.api.nvim_create_autocmd("BufRead", {
   pattern = { "*.js", "*.ts", "*.tsx", "*.jsx" },
   group = "JSSettings",
   callback = function()
-    vim.keymap.set("n", "<leader>p", ":!prettier '%:p' --write<CR>", { silent = true })
+    vim.keymap.set("n", "<leader>p", function()
+      vim.lsp.buf.format({ async = true })
+    end, { silent = true, buffer = true, desc = "Format using LSP" })
   end,
 })
 
