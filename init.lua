@@ -637,6 +637,11 @@ local servers = {
       pythonPath = vim.fn.exepath("python"),
     },
   },
+  -- basedpyright = {
+  --   python = {
+  --     pythonPath = vim.fn.exepath("python"),
+  --   },
+  -- },
   -- html = { filetypes = { 'html', 'twig', 'hbs'} },
 
   lua_ls = {
