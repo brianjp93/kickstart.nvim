@@ -668,7 +668,7 @@ mason_lspconfig.setup {
 
 mason_lspconfig.setup_handlers {
   function(server_name)
-    require('lspconfig')[server_name].setup {
+    vim.lsp.config[server_name] = {
       capabilities = capabilities,
       on_attach = on_attach,
       settings = servers[server_name],
@@ -679,7 +679,7 @@ mason_lspconfig.setup_handlers {
 
 
 -- Manual setup for django-template-lsp (not available in Mason)
-require('lspconfig').djlsp.setup {
+vim.lsp.config.djlsp = {
   capabilities = capabilities,
   on_attach = on_attach,
   filetypes = { 'htmldjango' },

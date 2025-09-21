@@ -7,7 +7,7 @@ return {
   },
   config = function()
     require("mason-null-ls").setup {
-      ensure_installed = { "djlint", "prettier" },
+      ensure_installed = { "djlint", "prettier", "pgformatter" },
     }
     require("null-ls").setup {
       sources = {
@@ -35,6 +35,10 @@ return {
             "graphql",
             "handlebars"
           },
+        }),
+        -- SQL formatting with pgformatter
+        require('null-ls').builtins.formatting.pg_format.with({
+          filetypes = { "sql", "pgsql", "plsql" },
         }),
       },
       -- Set up debug logging if you need to troubleshoot
