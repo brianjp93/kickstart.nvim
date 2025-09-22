@@ -674,6 +674,8 @@ mason_lspconfig.setup_handlers {
       settings = servers[server_name],
       filetypes = (servers[server_name] or {}).filetypes,
     }
+    -- Enable the LSP server after configuration
+    vim.lsp.enable(server_name)
   end,
 }
 
@@ -684,6 +686,7 @@ vim.lsp.config.djlsp = {
   on_attach = on_attach,
   filetypes = { 'htmldjango' },
 }
+vim.lsp.enable('djlsp')
 
 -- [[ Configure LuaSnip ]]
 local luasnip = require 'luasnip'
