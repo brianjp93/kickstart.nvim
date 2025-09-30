@@ -58,6 +58,9 @@ vim.o.splitbelow = true
 vim.o.splitright = true
 vim.o.scrolloff = 3
 vim.opt.termguicolors = true
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.expandtab = true
 
 return {
   {
