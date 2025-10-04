@@ -30,35 +30,16 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- [[ Configure plugins ]]
--- NOTE: Here is where you install your plugins.
---  You can configure plugins using the `config` key.
---
---  You can also configure plugins after the setup call,
---    as they will be available in your neovim runtime.
 require('lazy').setup({
-  -- NOTE: First, some plugins that don't require any configuration
-
-  -- Git related plugins
   'tpope/vim-fugitive',
-
   'NMAC427/guess-indent.nvim', -- Detect tabstop and shiftwidth automatically
 
-  -- NOTE: This is where your plugins related to LSP can be installed.
-  --  The configuration is done below. Search for lspconfig to find it below.
   {
-    -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
     dependencies = {
-      -- Automatically install LSPs to stdpath for neovim
       { 'mason-org/mason.nvim', config = true, commit='bfb07ad6f37bf285f3f16fd590dd8328b4431b01' },
       { 'mason-org/mason-lspconfig.nvim', commit='f995805bbfea692653bfedb9e42872107b84ef72' },
-
-      -- Useful status updates for LSP
-      -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
       { 'j-hui/fidget.nvim', opts = {} },
-
-      -- Additional lua configuration, makes nvim stuff amazing!
       'folke/neodev.nvim',
     },
   },
@@ -97,13 +78,10 @@ require('lazy').setup({
     },
   },
 
-  -- Useful plugin to show you pending keybinds.
   { 'folke/which-key.nvim', opts = {} },
   {
-    -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
     opts = {
-      -- See `:help gitsigns.txt`
       signs = {
         add = { text = '+' },
         change = { text = '~' },
@@ -175,7 +153,6 @@ require('lazy').setup({
   },
 
   {
-    -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
     -- See `:help lualine.txt`
     opts = {
@@ -191,8 +168,6 @@ require('lazy').setup({
   {
     -- Add indentation guides even on blank lines
     'lukas-reineke/indent-blankline.nvim',
-    -- Enable `lukas-reineke/indent-blankline.nvim`
-    -- See `:help ibl`
     main = 'ibl',
     opts = {
       scope = {
@@ -210,13 +185,8 @@ require('lazy').setup({
     branch = '0.1.x',
     dependencies = {
       'nvim-lua/plenary.nvim',
-      -- Fuzzy Finder Algorithm which requires local dependencies to be built.
-      -- Only load if `make` is available. Make sure you have the system
-      -- requirements installed.
       {
         'nvim-telescope/telescope-fzf-native.nvim',
-        -- NOTE: If you are having trouble with this installation,
-        --       refer to the README for telescope-fzf-native for more instructions.
         build = 'make',
         cond = function()
           return vim.fn.executable 'make' == 1
@@ -234,60 +204,26 @@ require('lazy').setup({
     build = ':TSUpdate',
   },
 
-  -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
-  --       These are some example plugins that I've included in the kickstart repository.
-  --       Uncomment any of the lines below to enable them.
   require 'kickstart.plugins.autoformat',
   require 'kickstart.plugins.debug',
 
-  -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
-  --    You can use this folder to prevent any conflicts with this init.lua if you're interested in keeping
-  --    up-to-date with whatever is in the kickstart repo.
-  --    Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
-  --
-  --    For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
+  -- add custom plugins from lua/custom/plugins
   { import = 'custom.plugins' },
 }, {})
 
--- [[ Setting options ]]
--- See `:help vim.o`
--- NOTE: You can change these options as you wish!
-
 -- Set highlight on search
 vim.o.hlsearch = true
-
--- Make line numbers default
 vim.wo.number = true
-
--- Enable mouse mode
 vim.o.mouse = 'a'
-
--- Sync clipboard between OS and Neovim.
---  Remove this option if you want your OS clipboard to remain independent.
---  See `:help 'clipboard'`
 vim.o.clipboard = 'unnamedplus'
-
--- Enable break indent
 vim.o.breakindent = true
-
--- Save undo history
 vim.o.undofile = true
-
--- Case-insensitive searching UNLESS \C or capital in search
 vim.o.ignorecase = true
 vim.o.smartcase = true
-
--- Keep signcolumn on by default
 vim.wo.signcolumn = 'yes'
-
--- Decrease update time
 vim.o.updatetime = 250
 vim.o.timeoutlen = 300
-
--- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
-
--- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
 
 -- [[ Basic Keymaps ]]
@@ -419,13 +355,9 @@ vim.defer_fn(function()
     -- Add languages to be installed here that you want installed for treesitter
     ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim', 'bash', 'markdown', 'ledger', 'sql', 'regex', 'just' },
 
-    -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
     auto_install = false,
-    -- Install languages synchronously (only applied to `ensure_installed`)
     sync_install = false,
-    -- List of parsers to ignore installing
     ignore_install = {},
-    -- You can specify additional Treesitter modules here: -- For example: -- playground = {--enable = true,-- },
     modules = {},
     highlight = {
       enable = true,
@@ -497,12 +429,6 @@ end, 0)
 -- [[ Configure LSP ]]
 --  This function gets run when an LSP connects to a particular buffer.
 local on_attach = function(_, bufnr)
-  -- NOTE: Remember that lua is a real programming language, and as such it is possible
-  -- to define small helper and utility functions so you don't have to repeat yourself
-  -- many times.
-  --
-  -- In this case, we create a function that lets us more easily define mappings specific
-  -- for LSP related items. It sets the mode, buffer and description for us each time.
   local nmap = function(keys, func, desc)
     if desc then
       desc = 'LSP: ' .. desc
@@ -570,19 +496,6 @@ require('which-key').add(
   }
 )
 
--- mason-lspconfig requires that these setup functions are called in this order
--- before setting up the servers.
--- require('mason').setup()
--- require('mason-lspconfig').setup()
-
--- Enable the following language servers
---  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
---
---  Add any additional override configuration in the following tables. They will be passed to
---  the `settings` field of the server config. You must look up that documentation yourself.
---
---  If you want to override the default filetypes that your language server will attach to you can
---  define the property 'filetypes' to the map in question.
 local servers = {
   gopls = {},
   rust_analyzer = {},
@@ -614,8 +527,6 @@ local servers = {
     Lua = {
       workspace = { checkThirdParty = false },
       telemetry = { enable = false },
-      -- NOTE: toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-      -- diagnostics = { disable = { 'missing-fields' } },
     },
   },
 }
@@ -659,9 +570,6 @@ vim.lsp.enable('djlsp')
 local luasnip = require 'luasnip'
 require('luasnip.loaders.from_vscode').lazy_load()
 luasnip.config.setup {}
-
--- The line beneath this is called `modeline`. See `:help modeline`
--- vim: ts=2 sts=2 sw=2 et
 
 vim.o.listchars = 'tab:▷ ,trail:█,extends:◣,precedes:◢,nbsp:○'
 vim.o.list = true
