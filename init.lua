@@ -32,7 +32,6 @@ vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
   'tpope/vim-fugitive',
-  'NMAC427/guess-indent.nvim', -- Detect tabstop and shiftwidth automatically
 
   {
     'neovim/nvim-lspconfig',
