@@ -504,7 +504,6 @@ require('which-key').add(
 )
 
 local servers = {
-  gopls = {},
   rust_analyzer = {},
   ts_ls = {},
   ruff = {},
