@@ -1,75 +1,92 @@
 -- autoformat.lua
 --
--- Use your language server to automatically format your code on save.
--- Adds additional commands as well to manage the behavior
+-- Format with conform.nvim. External formatter CLIs are installed with Mason,
+-- while Conform handles selecting/running them and falling back to LSP formatting.
+
+local format_is_enabled = false -- Disabled by default. Toggle with :KickstartFormatToggle.
 
 return {
-  'neovim/nvim-lspconfig',
-  config = function()
-    -- Switch for controlling whether you want autoformatting.
-    --  Use :KickstartFormatToggle to toggle autoformatting on or off
-    local format_is_enabled = false -- Disabled by default
-    vim.api.nvim_create_user_command('KickstartFormatToggle', function()
-      format_is_enabled = not format_is_enabled
-      print('Setting autoformatting to: ' .. tostring(format_is_enabled))
-    end, {})
+  {
+    'WhoIsSethDaniel/mason-tool-installer.nvim',
+    dependencies = { 'mason-org/mason.nvim' },
+    opts = {
+      ensure_installed = {
+        'djlint',
+        'pgformatter',
+        'prettier',
+        'stylua',
+      },
+      integrations = {
+        ['mason-lspconfig'] = false,
+        ['mason-null-ls'] = false,
+        ['mason-nvim-dap'] = false,
+      },
+    },
+  },
 
-    -- Create an augroup that is used for managing our formatting autocmds.
-    --      We need one augroup per client to make sure that multiple clients
-    --      can attach to the same buffer without interfering with each other.
-    local _augroups = {}
-    local get_augroup = function(client)
-      if not _augroups[client.id] then
-        local group_name = 'kickstart-lsp-format-' .. client.name
-        local id = vim.api.nvim_create_augroup(group_name, { clear = true })
-        _augroups[client.id] = id
-      end
+  {
+    'stevearc/conform.nvim',
+    event = { 'BufWritePre' },
+    cmd = { 'ConformInfo' },
+    keys = {
+      {
+        '<leader>p',
+        function()
+          require('conform').format { async = true, lsp_format = 'fallback' }
+        end,
+        mode = { 'n', 'v' },
+        desc = 'Format current buffer',
+      },
+    },
+    init = function()
+      vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
 
-      return _augroups[client.id]
-    end
-
-    -- Whenever an LSP attaches to a buffer, we will run this function.
-    --
-    -- See `:help LspAttach` for more information about this autocmd event.
-    vim.api.nvim_create_autocmd('LspAttach', {
-      group = vim.api.nvim_create_augroup('kickstart-lsp-attach-format', { clear = true }),
-      -- This is where we attach the autoformatting for reasonable clients
-      callback = function(args)
-        local client_id = args.data.client_id
-        local client = vim.lsp.get_client_by_id(client_id)
-        local bufnr = args.buf
-
-        -- Only attach to clients that support document formatting
-        if not client.server_capabilities.documentFormattingProvider then
-          return
+      vim.api.nvim_create_user_command('KickstartFormatToggle', function()
+        format_is_enabled = not format_is_enabled
+        print('Setting autoformatting to: ' .. tostring(format_is_enabled))
+      end, { desc = 'Toggle format on save' })
+    end,
+    opts = {
+      notify_on_error = false,
+      default_format_opts = {
+        lsp_format = 'fallback',
+      },
+      format_on_save = function(bufnr)
+        if not format_is_enabled then
+          return nil
         end
 
-        -- Don't use tsserver for formatting (we'll use null-ls with prettier instead)
-        -- but we still want it for other capabilities
-        if client.name == 'tsserver' then
-          client.server_capabilities.documentFormattingProvider = false
-          return
-        end
-
-        -- Create an autocmd that will run *before* we save the buffer.
-        --  Run the formatting command for the LSP that has just attached.
-        vim.api.nvim_create_autocmd('BufWritePre', {
-          group = get_augroup(client),
-          buffer = bufnr,
-          callback = function()
-            if not format_is_enabled then
-              return
-            end
-
-            vim.lsp.buf.format {
-              async = false,
-              filter = function(c)
-                return c.id == client.id
-              end,
-            }
-          end,
-        })
+        return {
+          bufnr = bufnr,
+          timeout_ms = 1000,
+          lsp_format = 'fallback',
+        }
       end,
-    })
-  end,
+      formatters_by_ft = {
+        lua = { 'stylua' },
+
+        htmldjango = { 'djlint' },
+
+        javascript = { 'prettier' },
+        javascriptreact = { 'prettier' },
+        typescript = { 'prettier' },
+        typescriptreact = { 'prettier' },
+        vue = { 'prettier' },
+        css = { 'prettier' },
+        scss = { 'prettier' },
+        less = { 'prettier' },
+        html = { 'prettier' },
+        json = { 'prettier' },
+        jsonc = { 'prettier' },
+        yaml = { 'prettier' },
+        markdown = { 'prettier' },
+        graphql = { 'prettier' },
+        handlebars = { 'prettier' },
+
+        sql = { 'pg_format' },
+        pgsql = { 'pg_format' },
+        plsql = { 'pg_format' },
+      },
+    },
+  },
 }
