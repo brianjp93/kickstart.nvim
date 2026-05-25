@@ -1,3 +1,5 @@
+vim.loader.enable()
+
 --  Fix for windows WSL issue
 if vim.fn.has('wsl') == 1 then
   vim.g.clipboard = {
@@ -18,7 +20,7 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
-if not vim.loop.fs_stat(lazypath) then
+if not vim.uv.fs_stat(lazypath) then
   vim.fn.system {
     'git',
     'clone',
@@ -369,7 +371,7 @@ vim.defer_fn(function()
       enable = true,
       disable = function(lang, buf)
         local max_filesize = 1000 * 1024
-        local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+        local ok, stats = pcall(vim.uv.fs_stat, vim.api.nvim_buf_get_name(buf))
         if ok and stats and stats.size > max_filesize then
           vim.print("Highlighting disabled due to file size.")
           return true
