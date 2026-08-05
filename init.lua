@@ -501,7 +501,7 @@ require('which-key').add(
 
 local servers = {
   rust_analyzer = {},
-  ts_ls = {},
+  vtsls = {},
   ruff = {},
   eslint = {},
   bashls = {},
